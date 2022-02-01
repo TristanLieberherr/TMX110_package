@@ -3,6 +3,7 @@ from pymodbus.client.sync import ModbusTcpClient, ModbusSocketFramer
 from pymodbus.constants import Defaults
 from pymodbus.interfaces import Singleton
 from ctypes import Structure, Union, c_uint16, c_float
+from cachetools import TTLCache, cached
 
 
 
@@ -108,6 +109,7 @@ class TMX110(ModbusTcpClient):
             return -1
 
     ## Read methods
+    @cached(cache=TTLCache(maxsize=1024, ttl=0.05))
     def read_values(self) -> ValuesStruct:
         response = self.read_holding_registers(self.__ADDRESS_FLOWRATE_FLOAT, 14)
         try:
@@ -118,6 +120,7 @@ class TMX110(ModbusTcpClient):
         finally:           
             return self._values_union.struct
 
+    @cached(cache=TTLCache(maxsize=1024, ttl=0.05))
     def read_status(self) -> StatusBits:
         response = self.read_holding_registers(self.__ADDRESS_STATUS)
         try:
@@ -127,9 +130,11 @@ class TMX110(ModbusTcpClient):
         finally:
             return self._status_union.bits
             
+    @cached(cache=TTLCache(maxsize=1024, ttl=0.05))
     def read_LCD1(self) -> str:
         return self._read_LCD(self.__ADDRESS_LCD1_START, self.__ADDRESS_LCD1_END)
 
+    @cached(cache=TTLCache(maxsize=1024, ttl=0.05))
     def read_LCD2(self) -> str:
         return self._read_LCD(self.__ADDRESS_LCD2_START, self.__ADDRESS_LCD2_END)
 

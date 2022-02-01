@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="tmx110",
-    version="0.0.1",
+    version="0.0.2",
     scripts=["bin/tmx110"],
     author="Tristan Lieberherr",
     author_email="tristan.lieberherr@heig-vd.ch",
@@ -22,5 +22,5 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    install_requires=["pymodbus"],
+    install_requires=["pymodbus", "cachetools"],
 )
