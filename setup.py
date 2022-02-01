@@ -13,7 +13,7 @@ setuptools.setup(
     description="TMX110 programming interface",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="",
+    url="https://github.com/TristanLieberherr/TMX110_package",
     packages=["tmx110"],
     classifiers=[
         "Development Status :: 4 - Beta",
